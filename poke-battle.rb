@@ -1,9 +1,9 @@
 require 'json'
 require 'rest-client'
-require 'pp'
+require 'http'
 
 #Para lograr el objetivo, hare una request que llenara 
-#un array con los nombres de los poke
+#un array con los nombres de los Pokemons
 
 #2 para hacer pelear 2 y luego agrandar el problema
 id_pokemons = 8.times.map { rand(151) }
@@ -44,7 +44,7 @@ pokemons = {}
 i = 0
 for id in id_pokemons do
     poke_url = "https://pokeapi.co/api/v2/pokemon/#{id}"
-    poke_query = RestClient.get(poke_url)
+    poke_query = HTTP.get(poke_url)
     poke_query_res = JSON.parse(poke_query.to_str)
     damage_relations = []
 
@@ -146,8 +146,6 @@ def tournament(pokemons)
         w_battle_3 = fight(pokemons["Pokemon 4"],pokemons["Pokemon 5"],3)
         w_battle_4 = fight(pokemons["Pokemon 6"],pokemons["Pokemon 7"],4)
         winners_first_round = [w_battle_1,w_battle_2,w_battle_3,w_battle_4]
-        # puts "First Round Winners"
-        # puts winners_first_round
         return winners_first_round
     end
     winners_first_round = round_1(pokemons)
